@@ -1,4 +1,2 @@
-export function visitOxford3k5kPage(){
-
-}
-
+export {default as addPhonsToList} from './addPhonsToList'
+export {default as writeList} from './writeList'

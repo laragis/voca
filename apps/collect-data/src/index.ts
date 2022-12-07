@@ -1,51 +1,19 @@
-import {By, until, Builder} from 'selenium-webdriver'
-import {visitOxford3k5kPage} from './oxford-3k-5k'
-import chrome, {ServiceBuilder} from 'selenium-webdriver/chrome'
-import firefox from 'selenium-webdriver/firefox'
-import config from './config'
+import {
+  writeList as oxford3k5k_writeList,
+  addPhonsToList as oxford3k5k_addPhonsToList,
+} from './oxford-3k-5k'
+import { getDriver } from "./utils";
 
 main().catch(err => {
-
+  console.log(err)
 })
 
 async function main() {
-  const driver = await getDriver()
+  const driver = getDriver()
+  await driver.manage().window().maximize();
+  await driver.manage().setTimeouts( { implicit: 20000 } );
 
-  await driver.get('http://www.google.com/ncr');
-
-  // await driver.quit();
-
-  // console.log(123)
-  // try {
-  //   // const driver = getDriver()
-  //   let driver = await new Builder().forBrowser("chrome").build();
-  //
-  // } catch (err) {
-  //   console.log(err)
-  // }
+  // await oxford3k5k_writeList()
+  await oxford3k5k_addPhonsToList()
+  await driver.quit()
 }
-
-function getDriver(browser = 'chrome') {
-  let driver = new Builder()
-
-  if(browser === 'chrome'){
-    driver = driver.forBrowser(browser)
-    driver = driver.setChromeOptions(getChromeOptions())
-  }
-
-  return driver.build();
-}
-
-function getChromeOptions(){
-  const chromeOptions = new chrome.Options();
-
-  // chromeOptions.addArguments('--no-sandbox')
-  // chromeOptions.addArguments('--disable-dev-shm-usage')
-  // chromeOptions.addArguments(`user-data-dir=${config.chrome.userDataDir}`)
-  // chromeOptions.addArguments(`profile-email=${config.chrome.profileEmail}`)
-  // chromeOptions.addArguments("start-maximized")
-
-  return chromeOptions
-}
-
-
