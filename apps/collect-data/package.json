@@ -29,6 +29,7 @@
     "@types/lodash": "^4.14.191",
     "@types/selenium-webdriver": "^4.1.9",
     "@types/voca": "^1.4.2",
+    "chalk": "^4.1.2",
     "chromedriver": "^108.0.0",
     "nodemon": "^2.0.20",
     "selenium-webdriver": "^4.7.0",
@@ -39,10 +40,11 @@
     "axios": "^1.2.1",
     "csv-writer": "^1.6.0",
     "jquery": "^3.6.1",
+    "jquery-jsdom": "^1.0.0",
     "jsdom": "^20.0.3",
     "json2csv": "^5.0.7",
+    "licia": "^1.37.0",
     "lodash": "^4.17.21",
-    "set-interval-async": "^3.0.2",
     "voca": "^1.4.0"
   }
 }

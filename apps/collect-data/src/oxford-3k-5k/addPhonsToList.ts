@@ -1,6 +1,7 @@
 import {
+  error,
   getDriver,
-  getTextBySelector,
+  getTextBySelector, info,
   matchCurrentUrl,
   readJSONFile,
   waitPageLoaded, writeCSVFile,
@@ -8,7 +9,7 @@ import {
 } from "../utils";
 import { By, Key } from 'selenium-webdriver'
 import { replaceAll } from 'voca'
-import { take } from 'lodash'
+import { take, takeRight, toNumber } from "lodash";
 import { Word } from './writeList'
 
 async function addPhonsToList() {
@@ -21,11 +22,16 @@ async function addPhonsToList() {
   // const words: Word[] = take(readJSONFile('oxford3k5k'), 2)
   const words: Word[] = readJSONFile('oxford3k5k')
 
+  info(`Reading Oxford 3k5k List`);
+
   for (const index in words) {
     // @ts-ignore
+    const url = words[index]?.site_url
     const word = words[index]?.word
 
-    await driver.findElement(By.id('q')).sendKeys(word, Key.RETURN)
+    await driver.sleep(2000)
+
+    await driver.get(url)
 
     await waitPageLoaded()
 
@@ -35,14 +41,16 @@ async function addPhonsToList() {
       const pron_uk = await getTextBySelector('.phons_br > .phon')
       const pron_us = await getTextBySelector('.phons_n_am > .phon')
 
-      words[index].pron_uk = 'Trương Thanh Tùng'
+      words[index].pron_uk = replaceAll(pron_uk, '/', '')
       words[index].pron_us = replaceAll(pron_us, '/', '')
 
-      console.log(`Read - ${word}`);
+      console.log(`${toNumber(index)+1}. ${word}`);
     } else {
-      console.log('Not OK', word)
+      error(`Not OK - ${toNumber(index)+1}. ${word}`)
     }
   }
+
+  info(`End Oxford 3k5k List`);
 
   await writeJSONFile('oxford3k5k_phons', words)
 

@@ -28,16 +28,22 @@ async function writeList() {
     const data = $(this).data()
 
     if (data.ox5000) {
+      let
+        pos = $(this).find('.pos').text(),
+        site_url = `https://www.oxfordlearnersdictionaries.com` + $(this).find('a').attr('href')
+
+      if(data.hw === 'yield' && pos === 'verb'){
+        site_url = `https://www.oxfordlearnersdictionaries.com/definition/english/yield_2`
+      }
+
       words.push({
         sn,
         word: data.hw,
         ox3000: data.ox3000 ? 1 : 0,
         ox5000: data.ox5000 ? 1 : 0,
         level: data.ox5000,
-        pos: $(this).find('.pos').text(),
-        site_url:
-          `https://www.oxfordlearnersdictionaries.com` +
-          $(this).find('a').attr('href')
+        pos,
+        site_url
       })
       sn++
     }

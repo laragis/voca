@@ -1,12 +1,17 @@
-import { Builder, By, Locator, until } from 'selenium-webdriver'
+import { Builder, By, Locator, ThenableWebDriver, until, WebElement } from "selenium-webdriver";
 import chrome from 'selenium-webdriver/chrome'
+import firefox from 'selenium-webdriver/firefox'
 import fs from 'fs'
 import { createObjectCsvWriter } from 'csv-writer'
 import { isString, map } from 'lodash'
+import config from './config'
+import { JSDOM } from "jsdom";
+import jQueryFactory from "jquery";
+import chalk from 'chalk'
 
 let driver: any = null
 
-export function getDriver(browser = 'chrome') {
+export function getDriver(browser = 'chrome'): ThenableWebDriver {
   if (driver) return driver
 
   driver = new Builder()
@@ -14,6 +19,11 @@ export function getDriver(browser = 'chrome') {
   if (browser === 'chrome') {
     driver.forBrowser(browser)
     driver.setChromeOptions(getChromeOptions())
+  }
+
+  if (browser === 'firefox') {
+    driver.forBrowser(browser)
+    driver.setFirefoxOptions(getFirefoxOptions())
   }
 
   driver = driver.build()
@@ -26,11 +36,22 @@ function getChromeOptions() {
 
   chromeOptions.addArguments('--no-sandbox')
   chromeOptions.addArguments('--disable-dev-shm-usage')
-  // chromeOptions.addArguments(`user-data-dir=${config.chrome.userDataDir}`)
-  // chromeOptions.addArguments(`profile-email=${config.chrome.profileEmail}`)
+  chromeOptions.addArguments(`user-data-dir=${config.chrome.userDataDir}`)
+  chromeOptions.addArguments(`profile-email=${config.chrome.profileEmail}`)
   chromeOptions.addArguments('start-maximized')
 
+  chromeOptions.setChromeBinaryPath(config.chrome.binary)
+
   return chromeOptions
+}
+
+function getFirefoxOptions() {
+  const firefoxOptions = new firefox.Options()
+
+  firefoxOptions.setBinary(config.firefox.binary)
+  firefoxOptions.setProfile(config.firefox.profile)
+
+  return firefoxOptions
 }
 
 export const waitElement = (locator: Locator, delay = 20000) =>
@@ -38,6 +59,13 @@ export const waitElement = (locator: Locator, delay = 20000) =>
     await getDriver().wait(until.elementLocated(locator), delay)
     return getDriver().findElement(locator)
   })
+
+export const waitClick = (element: WebElement | Locator, delay = 5000) => {
+  return driver.wait(() => {
+    if(element instanceof WebElement) return element.click().then(() => true, (err: any) => false)
+    return driver.findElement(element).click().then(() => true, (err: any) => false)
+  }, delay)
+}
 
 export async function waitPageLoaded(delay?: number, shouldStopTime?: number) {
   let serial = 1
@@ -121,4 +149,14 @@ export const writeCSVFile = async (
   console.log(`Data written to file ${fileName}.csv`)
 }
 
+export const sleep = (timeout: number) => new Promise(resolve => setTimeout(resolve, timeout));
 
+export const parseHTML = (htmlStr: string) => {
+  const jsWindow: any = new JSDOM(htmlStr).window
+  return jQueryFactory(jsWindow, true)
+}
+
+export const info = (message: string) => console.log(chalk.blue(message))
+export const success = (message: string) => console.log(chalk.green(message))
+export const warning = (message: string) => console.log(chalk.bgYellow(message))
+export const error = (message: string) => console.log(chalk.red(message))
