@@ -8,6 +8,7 @@ import config from './config'
 import { JSDOM } from "jsdom";
 import jQueryFactory from "jquery";
 import chalk from 'chalk'
+import { moment } from "licia";
 
 let driver: any = null
 
@@ -117,7 +118,7 @@ export const writeJSONFile = async (fileName: string, data: object) => {
     process.cwd() + `/data/${fileName}.json`,
     JSON.stringify(data, null, 2)
   )
-  console.log(`Data written to file ${fileName}.json`)
+  console.log(chalk.blue(`Data written to file ${chalk.bold(`${fileName}.json`)}`))
 }
 
 export const readJSONFile = (fileName: string) => {
@@ -160,3 +161,4 @@ export const info = (message: string) => console.log(chalk.blue(message))
 export const success = (message: string) => console.log(chalk.green(message))
 export const warning = (message: string) => console.log(chalk.bgYellow(message))
 export const error = (message: string) => console.log(chalk.red(message))
+// export const showDateTime = () => console.log(moment().lang('vi').format('L LTS'))

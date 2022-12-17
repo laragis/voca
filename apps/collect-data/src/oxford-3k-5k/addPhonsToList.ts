@@ -9,7 +9,7 @@ import {
 } from "../utils";
 import { By, Key } from 'selenium-webdriver'
 import { replaceAll } from 'voca'
-import { take, takeRight, toNumber } from "lodash";
+import { isInteger, take, takeRight, toNumber } from "lodash";
 import { Word } from './writeList'
 
 async function addPhonsToList() {
@@ -20,16 +20,22 @@ async function addPhonsToList() {
   await driver.get(appUrl)
 
   // const words: Word[] = take(readJSONFile('oxford3k5k'), 2)
-  const words: Word[] = readJSONFile('oxford3k5k')
+  const words: Word[] = readJSONFile('oxford3k5k_phons')
 
   info(`Reading Oxford 3k5k List`);
 
   for (const index in words) {
+    await waitPageLoaded()
+
     // @ts-ignore
+    const serial = toNumber(index) + 1
     const url = words[index]?.site_url
     const word = words[index]?.word
 
-    await driver.sleep(2000)
+    if(words[index]?.pron_uk){
+      console.log(`${serial}. ${word}`);
+      continue
+    }
 
     await driver.get(url)
 
@@ -44,9 +50,13 @@ async function addPhonsToList() {
       words[index].pron_uk = replaceAll(pron_uk, '/', '')
       words[index].pron_us = replaceAll(pron_us, '/', '')
 
-      console.log(`${toNumber(index)+1}. ${word}`);
+      console.log(`${serial}. ${word}`);
+
+      if(isInteger((serial) / 10)){
+        await writeJSONFile('oxford3k5k_phons', words)
+      }
     } else {
-      error(`Not OK - ${toNumber(index)+1}. ${word}`)
+      error(`Not OK - ${serial}. ${word}`)
     }
   }
 
