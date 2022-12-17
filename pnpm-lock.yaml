@@ -32,6 +32,7 @@ importers:
       axios: ^1.2.1
       chalk: ^4.1.2
       chromedriver: ^108.0.0
+      csv-parse: ^5.3.3
       csv-writer: ^1.6.0
       jquery: ^3.6.1
       jquery-jsdom: ^1.0.0
@@ -46,6 +47,7 @@ importers:
       voca: ^1.4.0
     dependencies:
       axios: 1.2.1
+      csv-parse: 5.3.3
       csv-writer: 1.6.0
       jquery: 3.6.1
       jquery-jsdom: 1.0.0
@@ -1947,6 +1949,10 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       cssom: 0.3.8
+    dev: false
+
+  /csv-parse/5.3.3:
+    resolution: {integrity: sha512-kEWkAPleNEdhFNkHQpFHu9RYPogsFj3dx6bCxL847fsiLgidzWg0z/O0B1kVWMJUc5ky64zGp18LX2T3DQrOfw==}
     dev: false
 
   /csv-writer/1.6.0:

@@ -7,7 +7,7 @@ export default {
   firefox: {
     binary: 'C:\\Program Files\\Mozilla Firefox\\firefox.exe',
     // about:profiles
-    profile: 'C:\\Users\\MTX\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\fm5tz5hu.default-release'
+    profile: 'C:\\Users\\ttungbmt\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\17luk9wh.default-release'
   }
 }
 

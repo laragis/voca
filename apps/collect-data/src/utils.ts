@@ -9,6 +9,7 @@ import { JSDOM } from "jsdom";
 import jQueryFactory from "jquery";
 import chalk from 'chalk'
 import { moment } from "licia";
+import {parse} from "csv-parse";
 
 let driver: any = null
 
@@ -128,6 +129,25 @@ export const readJSONFile = (fileName: string) => {
 
 interface Options {
   headers: object | string[]
+}
+
+export async function readCSVFile(path: string){
+  return new Promise((resolve, reject) => {
+    let data: any = []
+    fs.createReadStream(process.cwd() + `/data/${path}`, {
+      // encoding: 'utf-8'
+    })
+      .pipe(parse())
+      .on("data", function (row: any) {
+        data.push(row)
+      })
+      .on("end", function () {
+        resolve(data)
+      })
+      .on("error", function (error: any) {
+        reject(error)
+      });
+  })
 }
 
 export const writeCSVFile = async (
