@@ -1,0 +1,51 @@
+SELECT 'a' alphabet, count(*) count FROM words WHERE word like 'a%'
+UNION
+SELECT 'b' alphabet, count(*) count FROM words WHERE word like 'b%'
+UNION
+SELECT 'c' alphabet, count(*) count FROM words WHERE word like 'c%'
+UNION
+SELECT 'd' alphabet, count(*) count FROM words WHERE word like 'd%'
+UNION
+SELECT 'e' alphabet, count(*) count FROM words WHERE word like 'e%'
+UNION
+SELECT 'f' alphabet, count(*) count FROM words WHERE word like 'f%'
+UNION
+SELECT 'g' alphabet, count(*) count FROM words WHERE word like 'g%'
+UNION
+SELECT 'h' alphabet, count(*) count FROM words WHERE word like 'h%'
+UNION
+SELECT 'i' alphabet, count(*) count FROM words WHERE word like 'i%'
+UNION
+SELECT 'j' alphabet, count(*) count FROM words WHERE word like 'j%'
+UNION
+SELECT 'k' alphabet, count(*) count FROM words WHERE word like 'k%'
+UNION
+SELECT 'l' alphabet, count(*) count FROM words WHERE word like 'l%'
+UNION
+SELECT 'm' alphabet, count(*) count FROM words WHERE word like 'm%'
+UNION
+SELECT 'n' alphabet, count(*) count FROM words WHERE word like 'n%'
+UNION
+SELECT 'o' alphabet, count(*) count FROM words WHERE word like 'o%'
+UNION
+SELECT 'p' alphabet, count(*) count FROM words WHERE word like 'p%'
+UNION
+SELECT 'q' alphabet, count(*) count FROM words WHERE word like 'q%'
+UNION
+SELECT 'r' alphabet, count(*) count FROM words WHERE word like 'r%'
+UNION
+SELECT 's' alphabet, count(*) count FROM words WHERE word like 's%'
+UNION
+SELECT 't' alphabet, count(*) count FROM words WHERE word like 't%'
+UNION
+SELECT 'u' alphabet, count(*) count FROM words WHERE word like 'u%'
+UNION
+SELECT 'v' alphabet, count(*) count FROM words WHERE word like 'v%'
+UNION
+SELECT 'w' alphabet, count(*) count FROM words WHERE word like 'w%'
+UNION
+SELECT 'x' alphabet, count(*) count FROM words WHERE word like 'x%'
+UNION
+SELECT 'y' alphabet, count(*) count FROM words WHERE word like 'y%'
+UNION
+SELECT 'z' alphabet, count(*) count FROM words WHERE word like 'z%'
